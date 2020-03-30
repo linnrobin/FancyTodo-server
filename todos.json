@@ -1,0 +1,14 @@
+[
+    {
+        "title" : "makan",
+        "description" : "makan ayam",
+        "status" : false,
+        "due_date" : "2020-01-13"
+    },
+    {
+        "title" : "minum",
+        "description" : "minum teh",
+        "status" : false,
+        "due_date" : "2020-02-22 "
+    }
+]
