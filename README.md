@@ -1,5 +1,9 @@
 # FancyTodo-server
 
+* **BASE URL**
+
+  localhost:3000/
+
 **Show All Todo**
 ----
   Returns json data about all todos.
@@ -33,14 +37,13 @@
 * **Sample Call:**
 
   ```javascript
-    $.ajax({
-      url: "/users/1",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
+      let try = {
+      
+      method: GET
+      url: http://localhost:3000/todos
+      datatype: JSON
+      data: {}        
       }
-    });
   ```
 
 **Show Todo**
@@ -78,14 +81,13 @@
 * **Sample Call:**
 
   ```javascript
-    $.ajax({
-      url: "/users/1",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
+    let try = {
+      
+      method: GET
+      url: http://localhost:3000/todos/1
+      datatype: JSON
+      data: {}        
       }
-    });
   ```
 
 
@@ -124,14 +126,18 @@
 * **Sample Call:**
 
   ```javascript
-    $.ajax({
-      url: "/users/1",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
+    let try = {
+      
+      method: POST
+      url: http://localhost:3000/todos
+      datatype: JSON
+      data: {
+        "title": "makanan",
+        "description": "makanan enak sekali",
+        "status": false,
+        "due-date": 2020-01-13
+        }        
       }
-    });
   ```
 
 
@@ -175,14 +181,18 @@ OR
 * **Sample Call:**
 
   ```javascript
-    $.ajax({
-      url: "/users/1",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
+    let try = {
+      
+      method: PUT
+      url: http://localhost:3000/todos/1
+      datatype: JSON
+      data: {
+        "title": "makanan",
+        "description": "makanan enak sekali",
+        "status": false,
+        "due-date": 2020-01-13
+        }        
       }
-    });
   ```
 
 
@@ -220,14 +230,12 @@ OR
 
 * **Sample Call:**
 
-  ```javascript
-    $.ajax({
-      url: "/users/1",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
+```javascript
+    let try = {
+      
+      method: DELETE
+      url: http://localhost:3000/todos/1
+      datatype: JSON
+      data: {}        
       }
-    });
   ```
-

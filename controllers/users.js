@@ -3,7 +3,7 @@ const { decryptPass } = require('../helpers/bcrypt')
 const { generateToken } = require('../helpers/jwt')
 
 class Controller{
-    static signup(req, res) {
+    static signup(req, res, next) {
         let { email, password } = req.body
         let payload = { email, password } 
 
@@ -11,23 +11,22 @@ class Controller{
             .then(result => {
                 let user = {
                     id: result.id,
-                    email: result.email
+                    email: result.email,
+                    password: result.password
                 }
-
-                let token = generateToken(user)
-                console.log(token)
-
                 res.status(201).json({
                     'id': user.id,
                     'email': user.email,
-                    'access_token': token
+                    'password': user.password
                 })
             })
-            .catch(err => res.status(500).json(err))
+            .catch(err => {
+                return next(err)
+            })
         
     }
 
-    static signin(req, res) {
+    static signin(req, res, next) {
         let { email, password } = req.body
         let payload = { email, password } 
 
@@ -48,18 +47,28 @@ class Controller{
                         let token = generateToken(user)
 
                         res.status(200).json({
-                            'id': user.id,
-                            'email': user.email,
-                            'access_token': token
+                            'accessToken': token
                         })
                     } else {
-                        res.status(400).json({ message: 'Invalid Email / Password' })
+                        console.log(err)
+                        return next({
+                            name: 'BadRequest',
+                            errors: [{ message: 'Invalid Email / Password' }]
+                        })
                     }
                 } else {
-                    res.status(400).json({ message: 'Invalid Email / Password' })
+                    return next({
+                        name: 'BadRequest',
+                        errors: [{ message: 'Invalid Email / Password' }]
+                    })
                 }
             })
-            .catch(err => res.status(500).json(err))
+            .catch(err => {
+                return next({
+                    name: 'InternalServerError',
+                    errors: [{ message: err }]
+                })
+            })
     }
 }
 

@@ -17,11 +17,18 @@ module.exports = (sequelize, DataTypes) => {
       beforeCreate(user, options) {
         user.password = encryptPass(user.password)
       }
+    },
+    validate: {
+      noNull() {
+        if (this.email === "" || this.email == null || this.password === "" || this.password == null) {
+          throw new Error('Input cannot be empty')
+        }
+      }
     }
   })
  
   User.associate = function(models) {
-    // associations can be defined here
+    User.hasMany(models.Todo)
   };
   return User;
 };

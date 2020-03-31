@@ -1,8 +1,17 @@
-const { Todo } = require('../models')
+const { Todo, User } = require('../models')
+const Op = require('sequelize').Op
 
 class Controller {
     static findAll(req, res) {
-        Todo.findAll()
+        let payload = {
+            UserId: req.currentUserId
+        }
+        Todo.findAll({
+            where: {
+                UserId: payload.UserId
+            }, 
+            include: [ User ]
+        })
             .then(todos => res.status(200).json({ todos }))
             .catch(err => res.status(500).json(err))
     }
@@ -23,7 +32,12 @@ class Controller {
 
     static findOne(req, res) {
         let { id } = req.params
-        Todo.findByPk(id)
+
+        Todo.findOne({
+            where: {
+                id
+            }
+        })
             .then(result => {
                 if (result) {
                     res.status(200).json({ result })
