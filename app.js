@@ -3,9 +3,11 @@ const express = require('express')
 const app = express()
 const PORT = process.env.PORT 
 const routes = require('./routes')
+const cors = require('cors')
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
+app.use(cors())
 
 app.use('/', routes)
 
@@ -13,7 +15,6 @@ app.use( (err, req, res, next) => {
     console.log('bumtralala')
     switch (err.name) {
         case "SequelizeValidationError":
-            console.log('masuk sequelizeValidationError')
             const errors = err.errors.map(el => ({
                             code: 400,
                             name: 'Bad Request',
@@ -24,33 +25,33 @@ app.use( (err, req, res, next) => {
             })
 
         case "BadRequest":
-            console.log('masuk bad requests')
             return res.status(400).json({
+                code: 400,
+                name: 'Bad Request',
                 errors: err.errors
             })
 
+        case "NotFound":
+            return res.status(404).json({
+                    code: 404,
+                    name: 'Not Found',
+                    errors: err.errors
+            })
+
+        case "Unauthorized":
+            return res.status(401).json({
+                    code: 401,
+                    name: 'Unauthorized',
+                    errors: err.errors
+            })
+
         default:
-            console.log('masuk default')
-            console.log(err.name)
             return res.status(500).json({
-                errors: err.errors    
+                code: 500,
+                name: 'Internal Server Error',
+                errors: err.errors
             })
     }
 })
-//     if( err.name == "SequelizeValidationError") {
-//         const errors = err.errors.map(el => ({
-//             code: 400,
-//             name: 'BadRequest',
-//             message: el.message
-//         }))
-//         return res.status(400).json({
-//             errors
-//         })
-//     } else {
-//         res.status(500).json({
-//             errors: err
-//         })
-//     }
-// })
 
 app.listen(PORT, () => console.log('I love u: ', PORT))

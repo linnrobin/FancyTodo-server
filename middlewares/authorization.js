@@ -8,13 +8,21 @@ function authorization(req, res, next) {
                 if(result.UserId == req.currentUserId) {
                     return next()
                 } else {
-                    return res.status(401).json({ message: 'Unauthorized from authorization'})
+                    return next({
+                        name: "Unauthorized",
+                        errors: [{ message: 'Unauthorized from authorization'}]
+                    })
                 }
             } else {
-                return res.status(400).json({ message: 'Bad Request'})
+                return next({
+                    name: 'NotFound',
+                    errors: [{ message: 'Not Found' }]
+                })
             }
         })
-        .catch(err => res.status(500).json(err))
+        .catch(err => {
+            return next(err)
+        })
 }
 
 module.exports = authorization

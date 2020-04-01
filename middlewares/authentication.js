@@ -12,13 +12,21 @@ function authentication(req, res, next) {
                     req.currentUserId = result.id
                     return next()
                 } else {
-                    return res.status(404).json({ message: 'User Not Found'})
+                    return next({
+                        name: "NotFound",
+                        message: "User Not Found"
+                    })
                 }
             })
-            .catch(err => res.status(401).json({ message: 'Unauthorized' }))
+            .catch(err => {
+                return ({
+                    name: "Unauthorized",
+                    message: "Unauthorized from authentication"
+                })
+            })
     }
     catch(err) {
-        res.status(500).json(err)
+        return next(err)
     }
 }
 
