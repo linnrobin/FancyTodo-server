@@ -12,8 +12,9 @@ class Controller {
             })
     }
 
-    static calendarific2020ID(req, res, next) {
-        axios.get(`https://calendarific.com/api/v2/holidays?&api_key=${process.env.CALENDARIFICAPIKEY}&country=ID&year=2020`)
+    static calendarificID(req, res, next) {
+        let { year } = req.params
+        axios.get(`https://calendarific.com/api/v2/holidays?&api_key=${process.env.CALENDARIFICAPIKEY}&country=ID&year=${year}`)
             .then(result => {
                 let { data } = result
                 res.status(200).json({ data })
