@@ -5,5 +5,12 @@
     "database": "db_todo",
     "host": "127.0.0.1",
     "dialect": "postgres"
+  },
+  "production": {
+    "username": "dtwgeazmkipycr",
+    "password": "b58f4e3f9f02f91f250d46758dc8ad8913e1c1c489570ae81b63c5484964beea",
+    "database": "deleib1i2duc4o",
+    "host": "ec2-52-23-14-156.compute-1.amazonaws.com",
+    "dialect": "postgres"
   }
 }
