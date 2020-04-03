@@ -96,12 +96,13 @@ class Controller{
                                     let token = generateToken(payload)
 
                                     res.status(200).json({
-                                        'accessToken': token
+                                        'accessToken': token,
+                                        'msg': `Welcome Back, ${result.email}`
                                     })
                                 } else {
                                     return User.create({
                                         email,
-                                        password: 'Google123'
+                                        password: process.env.DEFAULT_PASSWORD
                                     })
                                         .then(newCreate => {
                                             let payload = {
@@ -112,7 +113,8 @@ class Controller{
                                             let token = generateToken(payload)
 
                                             res.status(201).json({
-                                                'accessToken': token
+                                                'accessToken': token,
+                                                'msg': 'First Time Google Sign In Successful'
                                             })
                                         })
                                         .catch(err => {

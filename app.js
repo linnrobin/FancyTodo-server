@@ -12,7 +12,6 @@ app.use(cors())
 app.use('/', routes)
 
 app.use( (err, req, res, next) => {
-    console.log('bumtralala')
     switch (err.name) {
         case "SequelizeValidationError":
             const errors = err.errors.map(el => ({

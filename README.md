@@ -37,13 +37,14 @@
 * **Sample Call:**
 
   ```javascript
-      let try = {
-      
-      method: GET
-      url: http://localhost:3000/todos
-      datatype: JSON
-      data: {}        
-      }
+    $.ajax({
+        method: 'GET',
+        url: baseUrl + '/todos',
+        headers: {
+        accessToken: localStorage.token
+        }
+    })
+
   ```
 
 **Show Todo**
@@ -81,13 +82,14 @@
 * **Sample Call:**
 
   ```javascript
-    let try = {
-      
-      method: GET
-      url: http://localhost:3000/todos/1
-      datatype: JSON
-      data: {}        
-      }
+    $.ajax({
+        method: 'GET',
+        url: baseUrl + '/todos/' + id,
+        headers: {
+            accessToken: localStorage.token
+        }
+    })
+
   ```
 
 
@@ -126,18 +128,15 @@
 * **Sample Call:**
 
   ```javascript
-    let try = {
-      
-      method: POST
-      url: http://localhost:3000/todos
-      datatype: JSON
-      data: {
-        "title": "makanan",
-        "description": "makanan enak sekali",
-        "status": false,
-        "due-date": 2020-01-13
-        }        
-      }
+    $.ajax({
+        method: 'POST',
+        url: baseUrl + '/todos',
+        headers: {
+            accessToken: localStorage.token
+        },
+        data
+    })
+
   ```
 
 
@@ -183,16 +182,14 @@ OR
   ```javascript
     let try = {
       
-      method: PUT
-      url: http://localhost:3000/todos/1
-      datatype: JSON
-      data: {
-        "title": "makanan",
-        "description": "makanan enak sekali",
-        "status": false,
-        "due-date": 2020-01-13
-        }        
-      }
+      $.ajax({
+          method: 'PUT',
+          url: baseUrl + '/todos/' + id,
+          headers: {
+              accessToken: localStorage.token
+          },
+          data
+      })
   ```
 
 
@@ -231,11 +228,210 @@ OR
 * **Sample Call:**
 
 ```javascript
-    let try = {
-      
-      method: DELETE
-      url: http://localhost:3000/todos/1
-      datatype: JSON
-      data: {}        
+  $.ajax({
+      method: 'DELETE',
+      url: baseUrl + '/todos/' + id,
+      headers: {
+          accessToken: localStorage.token
       }
+  })
+  ```
+
+  **Login User**
+----
+  Login registered user.
+
+* **URL**
+
+  /users/login
+
+* **Method:**
+
+  `POST`
+  
+*  **URL Params**
+
+    None
+
+* **Data Params**
+
+   **Required:**
+ 
+   `email=[string]`
+   `password=[string]`
+
+* **Success Response:**
+
+  * **Code:** 200 OK <br />
+    **Content:** `{ accesstoken : xyz }`
+ 
+* **Error Response:**
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ message : "User not found" }`
+
+* **Sample Call:**
+
+```javascript
+  $.ajax({
+      method: 'POST',
+      url: baseUrl + '/users/login',
+      data: { email, password }
+  })
+  ```
+
+  **Register User**
+----
+  Register new user.
+
+* **URL**
+
+  /users/register
+
+* **Method:**
+
+  `POST`
+  
+*  **URL Params**
+
+    None
+
+* **Data Params**
+
+   **Required:**
+ 
+   `email=[string]`
+   `password=[string]`
+
+* **Success Response:**
+
+  * **Code:** 201 OK <br />
+    **Content:** `{ message : Register Successful, Please Login }`
+ 
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ message : "Email Already Exists" }`
+
+* **Sample Call:**
+
+```javascript
+  $.ajax({
+      method: 'POST',
+      url: baseUrl + '/users/register',
+      data: { email, password }
+  })
+  ```
+
+**Register / Login Google User**
+----
+  Register new user if it's not yet exist, Login user if it's already exist.
+
+* **URL**
+
+  /users/googleSign
+
+* **Method:**
+
+  `POST`
+  
+*  **URL Params**
+
+    None
+
+* **Data Params**
+
+   **Required:**
+ 
+   `id_token=[string]`
+
+* **Success Response:**
+
+  * **Code:** 200 OK <br />
+    **Content:** `{ message : User Logged In }`
+ 
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ message : "Internal Server Error" }`
+
+* **Sample Call:**
+
+```javascript
+  $.ajax({
+      method: 'POST',
+      url: baseUrl + '/users/googleSign',
+      data: {
+          id_token
+      }
+  })
+  ```
+
+**Show Holiday API**
+----
+  Show Holiday json data from calendarific API.
+
+* **URL**
+
+  /api/calendarificID/ + year
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `year=[integer]`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 OK <br />
+    **Content:** `"holidays": [
+            {
+                "name": "New Year's Day",
+                "description": "New Year’s Day is the first day of the year, or January 1, in the Gregorian calendar.",
+                "country": {
+                    "id": "id",
+                    "name": "Indonesia"
+                },
+                "date": {
+                    "iso": "2020-01-01",
+                    "datetime": {
+                        "year": 2020,
+                        "month": 1,
+                        "day": 1
+                    }
+                },
+                "type": [
+                    "National holiday"
+                ],
+                "locations": "All",
+                "states": "All"
+            },
+            `
+ 
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ message : "Internal Server Error" }`
+
+* **Sample Call:**
+
+```javascript
+  $.ajax({
+      method: 'GET',
+      url: baseUrl + '/api/calendarificID/' + year,
+      beforeSend: function() {
+          $(".lds-grid").show();
+      },
+      success: function(data) {
+          $(".lds-grid").hide();
+      }
+  })
   ```
