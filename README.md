@@ -2,7 +2,8 @@
 
 * **BASE URL**
 
-  localhost:3000/
+  LOCAL - localhost:3000/
+  HEROKU - https://fancytodo-server.herokuapp.com/
 
 **Show All Todo**
 ----
