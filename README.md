@@ -17,13 +17,11 @@
 
   `GET`
   
-*  **URL Params**
+*  **Headers Params**
+  
+   **Required:**
 
-  None
-
-* **Data Params**
-
-  None
+  `accessToken=[token]`
 
 * **Success Response:**
 
@@ -42,7 +40,7 @@
         method: 'GET',
         url: baseUrl + '/todos',
         headers: {
-        accessToken: localStorage.token
+          accessToken: localStorage.token
         }
     })
 
@@ -65,10 +63,12 @@
    **Required:**
  
    `id=[integer]`
+  
+*  **Headers Params**
+  
+   **Required:**
 
-* **Data Params**
-
-  None
+  `accessToken=[token]`
 
 * **Success Response:**
 
@@ -106,9 +106,11 @@
 
   `POST`
   
-*  **URL Params**
- 
-  None
+*  **Headers Params**
+  
+   **Required:**
+
+  `accessToken=[token]`
 
 * **Data Params**
 
@@ -162,6 +164,12 @@
 * **Data Params**
 
   `req.body`
+  
+*  **Headers Params**
+  
+   **Required:**
+
+  `accessToken=[token]`
 
 * **Success Response:**
 
@@ -212,9 +220,12 @@ OR
  
    `id=[integer]`
 
-* **Data Params**
+  
+*  **Headers Params**
+  
+   **Required:**
 
-  None
+  `accessToken=[token]`
 
 * **Success Response:**
 
@@ -249,10 +260,6 @@ OR
 * **Method:**
 
   `POST`
-  
-*  **URL Params**
-
-    None
 
 * **Data Params**
 
@@ -293,10 +300,6 @@ OR
 
   `POST`
   
-*  **URL Params**
-
-    None
-
 * **Data Params**
 
    **Required:**
@@ -335,10 +338,6 @@ OR
 * **Method:**
 
   `POST`
-  
-*  **URL Params**
-
-    None
 
 * **Data Params**
 
@@ -385,10 +384,6 @@ OR
    **Required:**
  
    `year=[integer]`
-
-* **Data Params**
-
-  None
 
 * **Success Response:**
 
